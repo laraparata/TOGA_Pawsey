@@ -1572,7 +1572,7 @@ def parse_args(arg_strs: list[str] = None):
     app.add_argument(
         "--cluster_queue_name",
         "--cqn",
-        default="batch",
+        default="work",
         help=(
             "Specify cluster partition/queue, default batch. "
             "Another popular option is 'long'. Please consult "

@@ -60,7 +60,7 @@ class NextflowStrategy(ParallelizationStrategy):
     CHAIN_JOBS_PREFIX = "chain_feats__"
     CESAR_JOBS_PREFIX = "cesar_jobs__"
     CESAR_CONFIG_MEM_TEMPLATE = "${_MEMORY_}"
-    DEFAULT_QUEUE_NAME = "batch"
+    DEFAULT_QUEUE_NAME = "work"
 
     def __init__(self):
         super().__init__()

@@ -1,9 +1,34 @@
-// SLURM config file for CESAR jobs
-// since CESAR have various memory requirements, this
-// is just a template, TOGA will fill this itself
-// depending on the CESAR job bucket
-process.executor = 'slurm'
-process.time = '24h'  // mostly 8h is enough, just for robustness
-process.memory = "${_MEMORY_}G"  // to be replaced
-process.cpus = 1  // CESAR utilizes a single core only
-executor.queueSize = 1000  // nextflow default is 100 - too few
+manifest {
+    author = 'Lara Parata'
+    name = 'TOGA-nexflow' 
+    description = 'This is the nextflow for running TOGA on Pawsey'
+    mainScript = 'TOGA.nf'
+    version = '0.0.1'
+}
+
+resume = true
+
+profiles {
+
+    setonix {
+
+        process { 
+            cache = 'lenient'
+            stageInMode = 'symlink'
+        }
+    
+}}
+
+    
+params.slurm_account = 'pawsey0812'
+
+process {
+    executor = 'slurm'
+    clusterOptions = "--account=${params.slurm_account}"
+    queue = 'work'
+    cpus = { 1 }
+    memory = { "${_MEMORY_}G" }
+    time = { 24.h }
+    errorStrategy = { task.exitStatus in [143,137,104,134,139,247] ? 'retry' : 'finish' }
+}
+
